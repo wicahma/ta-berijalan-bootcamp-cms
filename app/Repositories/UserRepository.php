@@ -48,6 +48,6 @@ class UserRepository
 
     public function logout($request)
     {
-        return $request->user()->currentAccessToken()->delete();;
+        return $request->user()->currentAccessToken()->delete();
     }
 }

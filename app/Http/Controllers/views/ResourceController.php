@@ -120,8 +120,8 @@ class ResourceController extends Controller
                     array_push(
                         $newTechstack,
                         [
-                            'id' => intval($tech['id']),
-                            'level' => intval($tech['level']),
+                            'id' => $tech['id'] ? intval($tech['id']) : null,
+                            'level' => $tech['level'] ? intval($tech['level']) : null,
                         ]
                     );
                 }
@@ -182,8 +182,8 @@ class ResourceController extends Controller
                     array_push(
                         $newTechstack,
                         [
-                            'id' => intval($tech['id']),
-                            'level' => intval($tech['level']),
+                            'id' => $tech['id'] ? intval($tech['id']) : null,
+                            'level' => $tech['level'] ? intval($tech['level']) : null,
                         ]
                     );
                 }
