@@ -5,13 +5,60 @@
             <h2 class="text-lg font-semibold">
                 Techstacks
             </h2>
-            <button type="button"
-                class="h-7 flex gap-1 items-center justify-center text-nowrap rounded-lg p-1 px-3 w-fit text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm">
+            <button type="button" data-modal-target="create-techstack-modal" data-modal-toggle="create-techstack-modal"
+                class="h-7 flex gap-1 items-center justify-center
+                text-nowrap rounded-lg p-1 px-3 w-fit text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700
+                hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800
+                shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium text-sm">
                 <x-iconsax-lin-add class="h-full" />
                 <p>
                     Add Techstack
                 </p>
             </button>
+            <div id="create-techstack-modal" tabindex="-1"
+                class="hidden overflow-y-auto overflow-x-hidden backdrop-blur-sm transition-all duration-200 fixed top-0 right-0 left-0 z-[100] items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                <div class="relative p-4 w-full max-w-md max-h-full">
+                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                        <button type="button"
+                            class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                            data-modal-hide="create-techstack-modal">
+                            <x-iconsax-lin-add class="aspect-square h-5 rotate-45" />
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                        <div class="p-4 md:p-5">
+                            <form action="{{ route('req.techstack.create') }}" method="POST">
+                                @csrf
+                                <div>
+                                    <label for="techstack_name"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Techstack
+                                        name</label>
+                                    <input type="text" id="techstack_name" name="name"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        placeholder="ChatGPT Prompter" required />
+                                </div>
+                                <div>
+                                    <label for="section_id"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Section</label>
+                                    <select id="section_id" name="section_id"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option selected="" disabled>Select Section</option>
+                                        <option value="1">Frontend</option>
+                                        <option value="2">Backend</option>
+                                    </select>
+                                </div>
+                                <div class="flex justify-center gap-2 mt-3">
+                                    <button data-modal-hide="create-techstack-modal" type="submit"
+                                        class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                        Buat data
+                                    </button>
+                                    <button data-modal-hide="create-techstack-modal" type="button"
+                                        class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Tidak</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
@@ -95,21 +142,48 @@
                                                         <x-iconsax-lin-add class="aspect-square h-5 rotate-45" />
                                                         <span class="sr-only">Close modal</span>
                                                     </button>
-                                                    <div class="p-4 md:p-5 text-center">
-                                                        <x-iconsax-bro-info-circle
-                                                            class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" />
-                                                        <h3
-                                                            class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                                                            Apakah kamu yakin untuk
-                                                            menghapus data resource ini?</h3>
-                                                        <button data-modal-hide="edit-techstack-modal-{{ $loop->index }}"
-                                                            type="button"
-                                                            class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-                                                            Ya, hapus data
-                                                        </button>
-                                                        <button data-modal-hide="edit-techstack-modal-{{ $loop->index }}"
-                                                            type="button"
-                                                            class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Tidak</button>
+                                                    <div class="p-4 md:p-5">
+
+                                                        <form action="{{ route('req.techstack.update') }}" method="POST">
+                                                            @csrf
+                                                            <input type="text" hidden name="id"
+                                                                value="{{ $techstak->id }}">
+                                                            <div>
+                                                                <label for="techstack_name"
+                                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Techstack
+                                                                    name</label>
+                                                                <input type="text" id="techstack_name" name="name"
+                                                                    value="{{ $techstak->name }}"
+                                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                                    placeholder="ChatGPT Prompter" required />
+                                                            </div>
+                                                            <div>
+                                                                <label for="section_id"
+                                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Section</label>
+                                                                <select id="section_id" name="section_id"
+                                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                                    <option disabled>Select Section</option>
+                                                                    <option
+                                                                        {{ $techstak->section_id === 1 ? 'selected=""' : '' }}
+                                                                        value="1">Frontend</option>
+                                                                    <option
+                                                                        {{ $techstak->section_id === 2 ? 'selected=""' : '' }}
+                                                                        value="2">Backend</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="flex justify-center gap-2 mt-3">
+                                                                <button
+                                                                    data-modal-hide="edit-techstack-modal-{{ $loop->index }}"
+                                                                    type="submit"
+                                                                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                                    Buat data
+                                                                </button>
+                                                                <button
+                                                                    data-modal-hide="edit-techstack-modal-{{ $loop->index }}"
+                                                                    type="button"
+                                                                    class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Batal</button>
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -137,21 +211,24 @@
                                                             class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
                                                             Apakah kamu yakin untuk
                                                             menghapus data techstack ini?</h3>
-                                                        <form class="w-fit block"
-                                                            action="{{ route('req.techstack.delete', ['id' => $techstack->id]) }}"
-                                                            method="POST">
-                                                            @csrf
+
+                                                        <div class="flex justify-center gap-2">
+                                                            <form class="w-fit block"
+                                                                action="{{ route('req.techstack.delete', ['id' => $techstak->id]) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                <button
+                                                                    data-modal-hide="delete-techstack-modal-{{ $loop->index }}"
+                                                                    type="submit"
+                                                                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                                    Ya, hapus data
+                                                                </button>
+                                                            </form>
                                                             <button
                                                                 data-modal-hide="delete-techstack-modal-{{ $loop->index }}"
                                                                 type="button"
-                                                                class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-                                                                Ya, hapus data
-                                                            </button>
-                                                        </form>
-                                                        <button
-                                                            data-modal-hide="delete-techstack-modal-{{ $loop->index }}"
-                                                            type="button"
-                                                            class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Tidak</button>
+                                                                class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Tidak</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

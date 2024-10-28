@@ -16,7 +16,7 @@ class IsSessionValid
     public function handle(Request $request, Closure $next): Response
     {
         if (!$request->session()->has('LoginSession')) {
-            return redirect()->intended('/auth/login');
+            return redirect()->intended('auth/login');
         }
 
         return $next($request);

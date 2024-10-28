@@ -115,15 +115,16 @@ class ResourceController extends Controller
 
             $newTechstack = [];
 
-            foreach ($request->techstack as $tech) {
-                array_push(
-                    $newTechstack,
-                    [
-                        'id' => intval($tech['id']),
-                        'level' => intval($tech['level']),
-                    ]
-                );
-            }
+            if ($request->techstack)
+                foreach ($request->techstack as $tech) {
+                    array_push(
+                        $newTechstack,
+                        [
+                            'id' => intval($tech['id']),
+                            'level' => intval($tech['level']),
+                        ]
+                    );
+                }
             $response = $this->client->post(config('app.api_url') . '/resource', [
                 'headers' => [
                     'Accept' => 'application/json',
@@ -140,6 +141,7 @@ class ResourceController extends Controller
                     'type_id' => $request->type_id,
                     'category_id' => $request->category_id,
                     'techstack' => $newTechstack,
+                    'action' => 'create'
                 ])
             ]);
             $jsonResponse = json_decode($response->getBody()->getContents());
@@ -175,15 +177,16 @@ class ResourceController extends Controller
 
             $newTechstack = [];
 
-            foreach ($request->techstack as $tech) {
-                array_push(
-                    $newTechstack,
-                    [
-                        'id' => intval($tech['id']),
-                        'level' => intval($tech['level']),
-                    ]
-                );
-            }
+            if ($request->techstack)
+                foreach ($request->techstack as $tech) {
+                    array_push(
+                        $newTechstack,
+                        [
+                            'id' => intval($tech['id']),
+                            'level' => intval($tech['level']),
+                        ]
+                    );
+                }
             $response = $this->client->post(config('app.api_url') . '/resource', [
                 'headers' => [
                     'Accept' => 'application/json',
@@ -201,6 +204,7 @@ class ResourceController extends Controller
                     'type_id' => $request->type_id,
                     'category_id' => $request->category_id,
                     'techstack' => $newTechstack,
+                    'action' => 'update'
                 ])
             ]);
             $jsonResponse = json_decode($response->getBody()->getContents());

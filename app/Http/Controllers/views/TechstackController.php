@@ -95,8 +95,7 @@ class TechstackController extends Controller
         try {
             $token = session()->get('LoginSession');
 
-    
-            $response = $this->client->post(config('app.api_url') . '/resource', [
+            $response = $this->client->post(config('app.api_url') . '/techstack', [
                 'headers' => [
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/json',
@@ -104,8 +103,9 @@ class TechstackController extends Controller
                 ],
                 'body' => json_encode([
                     'name' => $request->name,
-                    'section_id' => $request->section_id,
+                    'section_id' => intval($request->section_id),
                     'is_active' => true,
+                    'action' => 'create'
                 ])
             ]);
             $jsonResponse = json_decode($response->getBody()->getContents());
@@ -113,9 +113,9 @@ class TechstackController extends Controller
                 $res = [
                     'status' => true,
                     'type' => 'success',
-                    'message' => 'Berhasil menambahkan data Resource!',
+                    'message' => 'Berhasil menambahkan data Techstack!',
                 ];
-                return redirect()->route('page.resource.index')->with($res);
+                return redirect()->route('page.techstack.index')->with($res);
             } else {
                 $res = [
                     'status' => false,
@@ -139,34 +139,18 @@ class TechstackController extends Controller
         try {
             $token = session()->get('LoginSession');
 
-            $newTechstack = [];
-
-            foreach ($request->techstack as $tech) {
-                array_push(
-                    $newTechstack,
-                    [
-                        'id' => intval($tech['id']),
-                        'level' => intval($tech['level']),
-                    ]
-                );
-            }
-            $response = $this->client->post(config('app.api_url') . '/resource', [
+            $response = $this->client->post(config('app.api_url') . '/techstack', [
                 'headers' => [
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/json',
                     'Authorization' => 'Bearer ' . $token
                 ],
                 'body' => json_encode([
-                    'id' => $request->id,
+                    'id' => intval($request->id),
                     'name' => $request->name,
-                    'email' => $request->email,
-                    'npk' => $request->npk,
-                    'phone_number' => $request->phone_number,
-                    'section_id' => $request->section_id,
-                    'role_id' => $request->role_id,
-                    'type_id' => $request->type_id,
-                    'category_id' => $request->category_id,
-                    'techstack' => $newTechstack,
+                    'section_id' => intval($request->section_id),
+                    'is_active' => true,
+                    'action' => 'update'
                 ])
             ]);
             $jsonResponse = json_decode($response->getBody()->getContents());
@@ -176,7 +160,7 @@ class TechstackController extends Controller
                     'type' => 'success',
                     'message' => 'Berhasil mengupdate data Resource!',
                 ];
-                return redirect()->route('page.resource.index')->with($res);
+                return redirect()->route('page.techstack.index')->with($res);
             } else {
                 $res = [
                     'status' => false,

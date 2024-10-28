@@ -13,7 +13,7 @@ Route::group(['prefix' => 'req'], function () {
     Route::post('/auth/logout', [AuthController::class, 'reqLogout'])->name('req.auth.logout');
     Route::post('/auth/login', [AuthController::class, 'reqLogin'])->name('req.auth.login');
     Route::post('/auth/register', [AuthController::class, 'reqRegister'])->name('req.auth.register');
-    
+
     Route::post('/resource/create', [ResourceController::class, 'reqCreate'])->name('req.resource.create');
     Route::post('/resource/update', [ResourceController::class, 'reqUpdate'])->name('req.resource.update');
     Route::post('/resource/delete/{id}', [ResourceController::class, 'reqDelete'])->name('req.resource.delete');
@@ -23,13 +23,15 @@ Route::group(['prefix' => 'req'], function () {
     Route::post('/techstack/delete/{id}', [TechstackController::class, 'reqDelete'])->name('req.techstack.delete');
 });
 
-Route::prefix('auth')->group(function () {
-    Route::get('/login', [AuthController::class, 'login'])->name('page.auth.login');
-    Route::get('/register', [AuthController::class, 'register'])->name('page.auth.register');
-    Route::get('/forgot-password', [AuthController::class, 'forgotPassword'])->name('page.auth.forgot_password');
-})->middleware('guest');
+Route::group(['middleware' => ['guest']], function () {
+    Route::prefix('auth')->group(function () {
+        Route::get('/login', [AuthController::class, 'login'])->name('page.auth.login');
+        Route::get('/register', [AuthController::class, 'register'])->name('page.auth.register');
+        Route::get('/forgot-password', [AuthController::class, 'forgotPassword'])->name('page.auth.forgot_password');
+    });
+});
 
-Route::group(['middleware' => 'is_logged_in'], function () {
+Route::group(['middleware' => ['is_logged_in']], function () {
     Route::get('/', [DashboardController::class, 'index'])->name('page.dashboard.index');
 
     Route::prefix('resource')->group(function () {
